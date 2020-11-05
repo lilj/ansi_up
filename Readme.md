@@ -127,6 +127,18 @@ In particular, the '&','<', and '>' characters are escaped. It is
 ** highly ** recommended that you do not set this to false. It will open
 the door security vulnerabilities.
 
+#### escape_quote
+(default: false)
+
+This option escaping of quotation tag '"' .
+```json
+{'name':"\033[1;33;40m Hello \033[2;37;0m"}
+```
+after convert, we got
+```json
+{'name':"<span style=\"color:rgb(...)\"> Hello </span>"}
+```
+
 #### use_classes
 (default: false)
 

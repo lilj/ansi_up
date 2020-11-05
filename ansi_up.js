@@ -38,6 +38,7 @@ var AnsiUp = (function () {
         this.setup_palettes();
         this._use_classes = false;
         this._escape_for_html = true;
+        this._escape_quote = false;
         this.bold = false;
         this.fg = this.bg = null;
         this._buffer = '';
@@ -50,7 +51,7 @@ var AnsiUp = (function () {
         set: function (arg) {
             this._use_classes = arg;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(AnsiUp.prototype, "escape_for_html", {
@@ -60,7 +61,17 @@ var AnsiUp = (function () {
         set: function (arg) {
             this._escape_for_html = arg;
         },
-        enumerable: true,
+        enumerable: false,
+        configurable: true
+    });
+    Object.defineProperty(AnsiUp.prototype, "escape_quote", {
+        get: function () {
+            return this._escape_quote;
+        },
+        set: function (arg) {
+            this._escape_quote = arg;
+        },
+        enumerable: false,
         configurable: true
     });
     Object.defineProperty(AnsiUp.prototype, "url_whitelist", {
@@ -70,7 +81,7 @@ var AnsiUp = (function () {
         set: function (arg) {
             this._url_whitelist = arg;
         },
-        enumerable: true,
+        enumerable: false,
         configurable: true
     });
     AnsiUp.prototype.setup_palettes = function () {
@@ -377,10 +388,11 @@ var AnsiUp = (function () {
         }
         var class_string = '';
         var style_string = '';
+        var quote_string = this._escape_quote ? "\\\"" : "\"";
         if (classes.length)
-            class_string = " class=\"" + classes.join(' ') + "\"";
+            class_string = " class=" + quote_string + classes.join(' ') + quote_string;
         if (styles.length)
-            style_string = " style=\"" + styles.join(';') + "\"";
+            style_string = " style=" + quote_string + styles.join(';') + quote_string;
         return "<span" + style_string + class_string + ">" + txt + "</span>";
     };
     ;

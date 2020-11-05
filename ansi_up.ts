@@ -67,6 +67,7 @@ class AnsiUp
 
     private _use_classes:boolean;
     private _escape_for_html;
+    private _escape_quote;
 
     private _csi_regex:RegExp;
 
@@ -83,6 +84,7 @@ class AnsiUp
         this.setup_palettes();
         this._use_classes = false;
         this._escape_for_html = true;
+        this._escape_quote = false;
 
         this.bold = false;
         this.fg = this.bg = null;
@@ -110,6 +112,16 @@ class AnsiUp
     get escape_for_html():boolean
     {
         return this._escape_for_html;
+    }
+
+    set escape_quote(arg:boolean)
+    {
+        this._escape_quote = arg;
+    }
+
+    get escape_quote():boolean
+    {
+        return this._escape_quote;
     }
 
     set url_whitelist(arg:{})
@@ -674,12 +686,13 @@ class AnsiUp
 
         let class_string = '';
         let style_string = '';
+        let quote_string = this._escape_quote ? "\\\"" : "\"";
 
         if (classes.length)
-            class_string = ` class="${classes.join(' ')}"`;
+            class_string = ` class=${quote_string}${classes.join(' ')}${quote_string}`;
 
         if (styles.length)
-            style_string = ` style="${styles.join(';')}"`;
+            style_string = ` style=${quote_string}${styles.join(';')}${quote_string}`;
 
         return `<span${style_string}${class_string}>${txt}</span>`;
     };
